@@ -93,5 +93,20 @@ RSpec.describe "User authentication", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
+
+      describe "DELETE /users" do
+    context "with valid parameters" do
+      it "deletes the user profile and redirects to root path" do
+        params = {
+          email: user.email,
+          current_password: user.password
+        }
+
+        delete user_registration_path, params: params
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(user_session_path)
+      end
+      end
+    end
   end
 end
