@@ -35,7 +35,7 @@ This is a Ruby on Rails application that provides a RESTful API for managing blo
 
 Follow these steps to set up the project on your local machine after $ write command in your terminal
 
-1. Clone the repository
+1. Clone the repository: $git clone https://github.com/Namfah01/Ruby_on_Rails_CRUD_API.git
 
 2. Install dependencies: $bundle install
 

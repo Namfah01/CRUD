@@ -8,10 +8,12 @@ on:
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install specific Bundler version
+        run: gem install bundler -v '2.5.17'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -19,18 +21,22 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
+      - name: Update dependencies
+        run: |
+          bundle update --bundler
+          bundle install
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        run: bundle exec brakeman --no-pager
 
   scan_js:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Install specific Bundler version
+        run: gem install bundler -v '2.5.17'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -38,16 +44,13 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'  # Specify the Node.js version
-
-      - name: Install JS dependencies
-        run: npm install
+      - name: Update dependencies
+        run: |
+          bundle update --bundler
+          bundle install
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+        run: bundle exec importmap audit
 
   lint:
     runs-on: ubuntu-latest
@@ -55,28 +58,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install specific Bundler version
+        run: gem install bundler -v '2.5.17'
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: bundle exec rubocop -f github
 
   test:
     runs-on: ubuntu-latest
-
-    services:
-      redis:
-        image: redis
-        ports:
-          - 6379:6379
-        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       - name: Install packages
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y google-chrome-stable curl libjemalloc2 libsqlite3-0 libvips
@@ -84,29 +79,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install specific Bundler version
+        run: gem install bundler -v '2.5.17'
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Install dependencies
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Prepare test database
-        run: bin/rails db:test:prepare
-
       - name: Run tests
         env:
           RAILS_ENV: test
-          REDIS_URL: redis://localhost:6379/0
-        run: bin/rails test test:system
+        run: bundle exec rails db:test:prepare test test:system
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: screenshots
-          path: tmp/screenshots
+          path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
 
