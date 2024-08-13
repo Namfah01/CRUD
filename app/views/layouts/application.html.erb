@@ -1,37 +1,61 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "Blog" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <title><%= content_for(:title) || "Blog" %></title>
 
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-  </head>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
 
-  <body class="prose mx-auto">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
 
-    <div>
-      <% if user_signed_in? %>
-      <%= link_to "New blog post", new_blog_post_path  %>
-      <%#= link_to "Profile", edit_user_registration_path  %>
-      <%= button_to "Log out", destroy_user_session_path, method: :delete %>
-      <%# else %>
-      <%#= link_to "login", new_user_session_path %>
-      <%#= link_to "Sign Up", new_user_registration_path %>
-      <% end %>
+  <%= yield :head %>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+  <header class="bg-blue-600 text-white shadow-md py-4">
+    <div class="container mx-auto px-6 flex items-center justify-between">
+      <h1 class="text-3xl font-semibold">
+        <%= content_for(:title) || "Blog" %>
+      </h1>
+      <nav class="space-x-4 flex">
+        <% if user_signed_in? %>
+          <%= link_to "New Blog Post", new_blog_post_path, class: "bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "Profile", edit_user_registration_path, class: "bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+        <% else %>
+          <%= link_to "Login", new_user_session_path, class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+        <% end %>
+      </nav>
     </div>
-    <%= yield %>
-  </body>
+  </header>
+
+  <main class="container mx-auto px-6 py-8">
+    <p class= text-green-800 p-4 rounded-lg mb-4" id="notice">
+      <%= notice %>
+    </p>
+    <p class= text-red-800 p-4 rounded-lg mb-4" id="alert">
+      <%= alert %>
+    </p>
+
+    <div class="prose lg:prose-xl bg-white shadow-md rounded-lg p-6">
+      <%= yield %>
+    </div>
+  </main>
+
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto px-6 text-center">
+      <p>&copy; <%= Time.current.year %> My Blog. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
 </html>
