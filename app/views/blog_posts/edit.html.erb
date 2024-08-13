@@ -1,5 +1,12 @@
-<h1>Edit blog post</h1>
+<div class="relative">
+  <h1 class="text-3xl font-bold mb-4">Edit blog post</h1>
 
-<%= render partial: "form", locals: { blog_post: @blog_post } %>
+  <div class="absolute bottom-0 right-0">
+    <%= button_to "Delete", @blog_post, method: :delete, data: { turbo_confirm: "Are you sure?" },
+                class: "bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 m-5 rounded  transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2" %>
+  </div>
 
-<%= button_to "Delete", @blog_post, method: :delete, data: {turbo_confirm: "Are you sure?" } %>
+  <%= render partial: "form", locals: { blog_post: @blog_post } %>
+</div>
+
+

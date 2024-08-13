@@ -21,19 +21,19 @@
   <%= yield :head %>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
-  <header class="bg-blue-600 text-white shadow-md py-4">
+  <header class="bg-gray-800 text-white shadow-md py-4">
     <div class="container mx-auto px-6 flex items-center justify-between">
       <h1 class="text-3xl font-semibold">
-        <%= content_for(:title) || "Blog" %>
+        <%= content_for?(:title) ? content_for(:title) : link_to("Blog", root_path) %>
       </h1>
       <nav class="space-x-4 flex">
         <% if user_signed_in? %>
-          <%= link_to "New Blog Post", new_blog_post_path, class: "bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
-          <%= link_to "Profile", edit_user_registration_path, class: "bg-blue-700 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
-          <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "New Blog Post", new_blog_post_path, class: "bg-gray-600 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "Account", edit_user_registration_path, class: "bg-gray-600 hover:bg-blue-800 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= button_to "Log Out", destroy_user_session_path, method: :delete, class: "bg-gray-600 hover:bg-red-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
         <% else %>
-          <%= link_to "Login", new_user_session_path, class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
-          <%= link_to "Sign Up", new_user_registration_path, class: "bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "Login", new_user_session_path, class: "bg-gray-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "bg-gray-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md shadow-sm transition ease-in-out duration-150" %>
         <% end %>
       </nav>
     </div>

@@ -1,4 +1,18 @@
-<h1><%= @blog_post.title %></h1>
-<%= @blog_post.body %>
-<%= link_to "Edit", edit_blog_post_path(@blog_post) if user_signed_in? %>
-<%= button_to 'Back to Home', root_path, method: :get %>
+<div class="relative max-w-2xl mx-auto p-6 bg-white rounded-lg">
+  <h1 class="text-4xl font-bold mb-4 text-gray-900">
+    <%= @blog_post.title %>
+  </h1>
+
+  <p class="text-lg mb-6 text-gray-700">
+    <%= @blog_post.body %>
+  </p>
+
+  <% if user_signed_in? %>
+    <div class="absolute bottom-4 right-4 flex space-x-2">
+      <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "bg-gray-800 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out no-underline" %>
+      <%= button_to 'Back to Home', root_path, method: :get, class: "bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out" %>
+    </div>
+  <% end %>
+</div>
+
+
