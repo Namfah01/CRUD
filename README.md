@@ -18,7 +18,7 @@ If you don’t have an account, you can sign up here:
 
 ## Post-Login Features
 
-After logging in, you can:
+After log in, you can:
 
 ### Create a New Post
 
