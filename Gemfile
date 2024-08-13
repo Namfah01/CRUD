@@ -33,6 +33,9 @@ gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
+gem "devise", "~> 4.9"
+
+gem "tailwindcss-rails", "~> 2.7"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -50,6 +53,7 @@ group :development do
   gem "web-console"
   gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'faker'
   # Highlight the fine-grained location where an error occurred [https://github.com/ruby/error_highlight]
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
 end
@@ -58,8 +62,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem 'rails-controller-testing'
+
 end
-
-gem "devise", "~> 4.9"
-
-gem "tailwindcss-rails", "~> 2.7"

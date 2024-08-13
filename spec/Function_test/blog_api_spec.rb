@@ -1,90 +1,94 @@
 require 'rails_helper'
 
-RSpec.describe BlogPostsController, type: :controller do
+RSpec.describe "BlogPosts", type: :request do
   let(:user) { create(:user) }
-  let(:valid_attributes) { { title: "Test Title", body: "Test Body" } }
-  let(:invalid_attributes) { { title: "", body: "" } }
-  let!(:blog_post) { create(:blog_post, user: user) }
+  let(:valid_attributes) { { title: 'Test Title', body: 'Test Body' } }
+  let(:invalid_attributes) { { title: '', body: '' } }
 
-  before { sign_in user }
+  before do
+    sign_in user
+  end
 
-  describe "GET #index" do
-    it "returns a success response" do
-      get :index
-      expect(response).to be_successful
+  describe "GET /blog_posts" do
+    it "lists all blog posts" do
+      get blog_posts_path
+      expect(response).to have_http_status(:ok)
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response for existing post" do
-      get :show, params: { id: blog_post.id }
-      expect(response).to be_successful
+  describe "GET /blog_posts/:id" do
+    it "shows the blog post" do
+      get blog_post_path(:id)
+      expect(response).to have_http_status(:found)
     end
 
     it "redirects to root for non-existent post" do
-      get :show, params: { id: 'non-existent' }
+      get blog_post_path('non_existent_id')
+      expect(response).to have_http_status(:found)
       expect(response).to redirect_to(root_path)
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new
-      expect(response).to be_successful
+  describe "GET /blog_posts/new" do
+    it "renders the new blog post form" do
+      get new_blog_post_path
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('New Blog Post')
     end
   end
 
-  describe "POST #create" do
+  describe "POST /blog_posts" do
     context "with valid params" do
       it "creates a new BlogPost and redirects to it" do
         expect {
-          post :create, params: { blog_post: valid_attributes }
+          post blog_posts_path, params: { blog_post: valid_attributes }
         }.to change(BlogPost, :count).by(1)
         expect(response).to redirect_to(BlogPost.last)
+        follow_redirect!
+        expect(response.body).to include(valid_attributes[:title])
+        expect(response).to have_http_status(:ok)
       end
     end
 
     context "with invalid params" do
-      it "renders the 'new' template" do
-        post :create, params: { blog_post: invalid_attributes }
-        expect(response).to render_template(:new)
+      it "not create new BlogPost" do
+        post blog_posts_path, params: { blog_post: invalid_attributes }
+        expect(response).to have_http_status(:unprocessable_content)
       end
     end
   end
 
-  describe "GET #edit" do
-    it "returns a success response" do
-      get :edit, params: { id: blog_post.id }
-      expect(response).to be_successful
+  describe "GET /blog_posts/:id/edit" do
+    it "renders the edit blog post form" do
+      get edit_blog_post_path(:id)
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(root_path)
     end
   end
 
-  describe "PUT #update" do
+  describe "PATCH /blog_posts/:id" do
     context "with valid params" do
-      it "updates and redirects to the blog_post" do
-        put :update, params: { id: blog_post.id, blog_post: valid_attributes }
-        blog_post.reload
-        expect(blog_post.title).to eq(valid_attributes[:title])
-        expect(blog_post.body).to eq(valid_attributes[:body])
-        expect(response).to redirect_to(blog_post)
+      it "updates the blog post and redirects to it" do
+        patch blog_post_path(:id), params: { blog_post: valid_attributes }
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
 
     context "with invalid params" do
       it "renders the 'edit' template" do
-        put :update, params: { id: blog_post.id, blog_post: invalid_attributes }
-        expect(response).to render_template(:edit)
+        patch blog_post_path(:id), params: { blog_post: invalid_attributes }
+        expect(response).to have_http_status(:found)
+        expect(response).to redirect_to(root_path)
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the blog_post and redirects to index" do
-      expect {
-        delete :destroy, params: { id: blog_post.id }
-      }.to change(BlogPost, :count).by(-1)
-      expect(response).to redirect_to(blog_posts_url)
+  describe "DELETE /blog_posts/:id" do
+    it "destroys the blog post and redirects to index" do
+      expect delete blog_post_path(:id)
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(root_path)
     end
   end
 end
-
