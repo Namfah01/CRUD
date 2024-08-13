@@ -1,16 +1,34 @@
 # Blog Application API
 
-<img width="935" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 45 17" src="https://github.com/user-attachments/assets/19454dc1-3ea6-4683-86fd-1488ca8efe22">
+## View Blog Posts
 
-<img width="499" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 45 53" src="https://github.com/user-attachments/assets/ff96fcc7-3868-4292-baba-9b3cb83659cf">
+All users can visit and view blog posts.
 
-<img width="499" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 46 13" src="https://github.com/user-attachments/assets/64651ede-d8f6-43c7-a988-bf972e855edc">
+![Blog Post View](https://github.com/user-attachments/assets/19454dc1-3ea6-4683-86fd-1488ca8efe22)
 
-<img width="961" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 48 17" src="https://github.com/user-attachments/assets/a8420e52-a789-4866-bcfc-17e084096559">
+## Authentication
 
-<img width="891" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 48 56" src="https://github.com/user-attachments/assets/7ed67bd0-4a39-48ef-938d-9cee88479b05">
+If you already have an account, you can log in here:
 
-<img width="879" alt="ภาพถ่ายหน้าจอ 2567-08-13 เวลา 17 49 42" src="https://github.com/user-attachments/assets/72a22d95-d2be-43ab-9706-55d9ab009f8d">
+![Login](https://github.com/user-attachments/assets/ff96fcc7-3868-4292-baba-9b3cb83659cf)
+
+If you don’t have an account, you can sign up here:
+
+![Sign Up](https://github.com/user-attachments/assets/64651ede-d8f6-43c7-a988-bf972e855edc)
+
+## Post-Login Features
+
+After logging in, you can:
+
+### Create a New Post
+
+![Create Post](https://github.com/user-attachments/assets/7ed67bd0-4a39-48ef-938d-9cee88479b05)
+
+### Edit Your Account Profile
+
+![Edit Profile](https://github.com/user-attachments/assets/72a22d95-d2be-43ab-9706-55d9ab009f8d)
+
+---
 
 ## Overview
 
